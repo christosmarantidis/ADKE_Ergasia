@@ -30,7 +30,7 @@ public class mainApp {
                 }
 
                 //Query user and print read ESSID's
-                System.out.println("Show ESSID's found ? (Y/N)");
+                System.out.println("Show ESSID's found ?(Y/N)");
                 Scanner scanner = new Scanner(System.in);
                 String answer=scanner.nextLine();
                 if(answer.equals("Y") || answer.equals("y")){
