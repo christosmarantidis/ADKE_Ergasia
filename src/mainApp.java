@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 public class mainApp {
     private static final String COMMA_DELIMITER = ",";
+    public static volatile boolean flag = true;
 
     public static void main(String[] args) {
         System.out.println("Welcome!");
@@ -23,7 +24,7 @@ public class mainApp {
                         Pairs.Pair pair = new Pairs.Pair<>(values[13],values[3]);
                         records.add(pair);
                         if(!values[3].equals("channel")){
-                            map.put(values[13],Integer.parseInt(values[3]));
+                            map.put(values[13].replaceAll("\\s+",""),Integer.parseInt(values[3]));
                         }
                     }
 
@@ -34,6 +35,7 @@ public class mainApp {
                 Scanner scanner = new Scanner(System.in);
                 String answer=scanner.nextLine();
                 if(answer.equals("Y") || answer.equals("y")){
+                    System.out.println("ESSID " + ": " + "Channel");
                     for (String keys : map.keySet())
                     {
                         System.out.println(keys + " : "+ map.get(keys));
@@ -41,7 +43,26 @@ public class mainApp {
 
                 }
 
+                //Query for ESSID to attack
+                System.out.println("Give the name of the ESSID you want to attack: ");
+                answer=scanner.nextLine();
 
+                UpdateThread thread = new UpdateThread();
+                while(flag){
+                    if(thread.isAlive()){
+                        thread.stop();
+                    }
+                    else{
+                        thread.start();
+                    }
+                }
+
+                //Query for quit
+                System.out.println("Want to quit ? ");
+                answer=scanner.nextLine();
+                if(answer.equals("Y") || answer.equals("y")){
+                    flag=false;
+                }
             }
 
 
